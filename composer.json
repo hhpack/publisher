@@ -2,7 +2,7 @@
   "name": "hhpack/publisher",
   "type": "library",
   "keywords": [ "hack", "hhvm", "publisher", "subscriber", "pubsub" ],
-  "description": "",
+  "description": "Simple implementation of Pub/Sub for Hack",
   "license": "MIT",
   "authors": [
     {
