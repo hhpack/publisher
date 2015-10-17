@@ -22,5 +22,10 @@
     "files": [
       "src/bootstrap.hh"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "hhpack\\publisher\\example\\": "example/src"
+    }
   }
 }

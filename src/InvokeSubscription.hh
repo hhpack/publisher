@@ -1,6 +1,6 @@
 <?hh //strict
 
-namespace hhhack\publisher;
+namespace hhpack\publisher;
 
 final class InvokeSubscription implements Subscription<Message>
 {
