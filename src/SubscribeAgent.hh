@@ -8,7 +8,7 @@ use ReflectionMethod;
 final class SubscribeAgent<T as Message> implements Agent<T>
 {
 
-    private Map<string, Vector<Subscription<T>>> $subscriptions = Map {};
+    private SubscriptionMap<T> $subscriptions = Map {};
 
     public function __construct(
         private Subscribable<T> $receiver
