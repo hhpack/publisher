@@ -11,10 +11,10 @@ final class SubscribeAgent<T as Message> implements Agent<T>
     private SubscriptionMap<T> $subscriptions = Map {};
 
     public function __construct(
-        private Subscribable<T> $receiver
+        private Subscribable<T> $subscriber
     )
     {
-        $class = new ReflectionClass($receiver);
+        $class = new ReflectionClass($subscriber);
         $methods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
 
         foreach ($methods as $method) {
@@ -33,7 +33,7 @@ final class SubscribeAgent<T as Message> implements Agent<T>
             if ($subscriptions === null) {
                 $subscriptions = Vector {};
             }
-            $subscriptions->add(new InvokeSubscription( Pair { $this->receiver, $method->getName() }));
+            $subscriptions->add(new InvokeSubscription( Pair { $this->subscriber, $method->getName() }));
 
             $this->subscriptions->set($typeName, $subscriptions);
         }
@@ -41,7 +41,7 @@ final class SubscribeAgent<T as Message> implements Agent<T>
 
     public function matches(Subscribable<T> $subscriber) : bool
     {
-        return $this->receiver === $subscriber;
+        return $this->subscriber === $subscriber;
     }
 
     public function receive(T $message) : void
