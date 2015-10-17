@@ -1,0 +1,26 @@
+{
+  "name": "hhpack/publisher",
+  "type": "library",
+  "keywords": [ "hack", "hhvm", "publisher", "subscriber", "pubsub" ],
+  "description": "",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Noritaka Horio",
+      "email": "holy.shared.design@gmail.com"
+    }
+  ],
+  "require": {
+    "hhvm": ">=3.6.0"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "hhpack\\publisher\\": "src"
+    },
+    "files": [
+      "src/bootstrap.hh"
+    ]
+  }
+}
