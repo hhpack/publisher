@@ -6,15 +6,15 @@ final class InvokeSubscription<T as Message> implements Subscription<T>
 {
 
     public function __construct(
-        private Pair<Subscribable<T>, string> $proxy
+        private InvokeTarget<T> $invokeTarget
     )
     {
     }
 
     public function receive(T $message) : void
     {
-        $arguments = $this->proxy->toArray();
-        call_user_func_array($arguments, [ $message ]);
+        $callback = $this->invokeTarget->toArray();
+        call_user_func_array($callback, [ $message ]);
     }
 
 }
