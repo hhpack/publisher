@@ -21,20 +21,21 @@ final class MessageSubscriber implements Subscriber<Message>
             $parameters = $method->getParameters();
             $parameter = $parameters[0];
 
-            $type = $parameter->getClass()->getName();
+            $type = $parameter->getClass();
+            $typeName = $parameter->getClass()->getName();
 
-            if ( !($type instanceof Message) ) {
+            if ($type->implementsInterface(Message::class) === false) {
                 continue;
             }
 
-            $subscriptions = $this->subscriptions->get($type);
+            $subscriptions = $this->subscriptions->get($typeName);
 
             if ($subscriptions === null) {
                 $subscriptions = Vector {};
             }
             $subscriptions->add(new InvokeSubscription( Pair { $this->receiver, $method->getName() }));
 
-            $this->subscriptions->set($type, $subscriptions);
+            $this->subscriptions->set($typeName, $subscriptions);
         }
     }
 
@@ -47,7 +48,7 @@ final class MessageSubscriber implements Subscriber<Message>
     {
         $nameOfType = get_class($message);
 
-        if ($this->subscriptions->containsKey($nameOfType)) {
+        if ($this->subscriptions->containsKey($nameOfType) === false) {
             return;
         }
         $subscriptions = $this->subscriptions->at($nameOfType);
