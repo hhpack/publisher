@@ -5,7 +5,7 @@ namespace hhpack\publisher;
 use ReflectionClass;
 use ReflectionMethod;
 
-final class MessageSubscriber implements Subscriber<Message>
+final class SubscribeAgent implements Agent<Message>
 {
 
     private Map<string, Vector<Subscription<Message>>> $subscriptions = Map {};
@@ -39,9 +39,9 @@ final class MessageSubscriber implements Subscriber<Message>
         }
     }
 
-    public function subscribe(Publicher<Message> $publicher) : void
+    public function matches(Subscribable<Message> $subscriber) : bool
     {
-        $publicher->registerSubscriber($this);
+        return $this->receiver === $subscriber;
     }
 
     public function receive(Message $message) : void
