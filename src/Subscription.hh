@@ -2,7 +2,7 @@
 
 namespace hhpack\publisher;
 
-interface Subscription<T as Message>
+interface Subscription<T>
 {
     public function receive(T $message) : void;
 }

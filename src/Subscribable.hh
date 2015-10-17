@@ -2,6 +2,6 @@
 
 namespace hhpack\publisher;
 
-interface Subscribable<T as Message>
+interface Subscribable<T>
 {
 }

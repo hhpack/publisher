@@ -2,21 +2,21 @@
 
 namespace hhpack\publisher;
 
-final class MessagePublicher implements Publicher<Message>
+final class MessagePublicher<T as Message> implements Publicher<T>
 {
 
     public function __construct(
-        private Vector<Agent<Message>> $subscribers = Vector {}
+        private Vector<Agent<T>> $subscribers = Vector {}
     )
     {
     }
 
-    public function registerSubscriber(Subscribable<Message> $subscriber) : void
+    public function registerSubscriber(Subscribable<T> $subscriber) : void
     {
         $this->subscribers->add(new SubscribeAgent($subscriber));
     }
 
-    public function unregisterSubscriber(Subscribable<Message> $subscriber) : void
+    public function unregisterSubscriber(Subscribable<T> $subscriber) : void
     {
         foreach ($this->subscribers->getIterator() as $key => $agent) {
             if ($agent->matches($subscriber) === false) {
@@ -26,7 +26,7 @@ final class MessagePublicher implements Publicher<Message>
         }
     }
 
-    public function publish(Message $message) : void
+    public function publish(T $message) : void
     {
         foreach ($this->subscribers->items() as $subscriber) {
             $subscriber->receive($message);

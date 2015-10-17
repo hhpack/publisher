@@ -5,13 +5,13 @@ namespace hhpack\publisher;
 use ReflectionClass;
 use ReflectionMethod;
 
-final class SubscribeAgent implements Agent<Message>
+final class SubscribeAgent<T as Message> implements Agent<T>
 {
 
-    private Map<string, Vector<Subscription<Message>>> $subscriptions = Map {};
+    private Map<string, Vector<Subscription<T>>> $subscriptions = Map {};
 
     public function __construct(
-        private Subscribable<Message> $receiver
+        private Subscribable<T> $receiver
     )
     {
         $class = new ReflectionClass($receiver);
@@ -39,12 +39,12 @@ final class SubscribeAgent implements Agent<Message>
         }
     }
 
-    public function matches(Subscribable<Message> $subscriber) : bool
+    public function matches(Subscribable<T> $subscriber) : bool
     {
         return $this->receiver === $subscriber;
     }
 
-    public function receive(Message $message) : void
+    public function receive(T $message) : void
     {
         $nameOfType = get_class($message);
 

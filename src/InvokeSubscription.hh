@@ -2,16 +2,16 @@
 
 namespace hhpack\publisher;
 
-final class InvokeSubscription implements Subscription<Message>
+final class InvokeSubscription<T as Message> implements Subscription<T>
 {
 
     public function __construct(
-        private Pair<Subscribable<Message>, string> $proxy
+        private Pair<Subscribable<T>, string> $proxy
     )
     {
     }
 
-    public function receive(Message $message) : void
+    public function receive(T $message) : void
     {
         $arguments = $this->proxy->toArray();
         call_user_func_array($arguments, [ $message ]);
