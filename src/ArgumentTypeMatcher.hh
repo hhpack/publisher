@@ -16,7 +16,7 @@ use ReflectionClass;
 use ReflectionParameter;
 
 
-final class ArgumentTypeMatcher implements Matcher<ReflectionMethod>
+final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResult>
 {
 
     public function __construct(
@@ -25,26 +25,29 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod>
     {
     }
 
-    public function matches(ReflectionMethod $item) : bool
+    public function matches(ReflectionMethod $item) : MatchedResult
     {
         $parameters = $item->getParameters();
 
         if (count($parameters) <= 0) {
-            return false;
+            return MatchedResult::createForUnmatched();
         }
 
         $parameter = $parameters[0];
         $type = $parameter->getClass();
 
         if ($type === null) {
-            return false;
+            return MatchedResult::createForUnmatched();
         }
 
         if ($type->implementsInterface($this->type) === false) {
-            return false;
+            return MatchedResult::createForUnmatched();
         }
 
-        return true;
+        return MatchedResult::createForMatched(
+            $type->getName(),
+            $item->getName()
+        );
     }
 
 }

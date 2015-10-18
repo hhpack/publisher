@@ -11,7 +11,8 @@
 
 namespace hhpack\publisher;
 
-interface Matcher<Ti, To>
+interface MatcherResult
 {
-    public function matches(Ti $item) : To;
+    public function matched() : bool;
+    public function unmatched() : bool;
 }
