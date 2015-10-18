@@ -11,7 +11,7 @@
 
 namespace hhpack\publisher;
 
-final class MessagePublicher<T as Message> implements Publicher<T>
+final class MessagePublisher<T as Message> implements Publisher<T>
 {
 
     private Vector<Agent<T>> $agents;
