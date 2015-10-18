@@ -12,14 +12,14 @@ Basic usage
 ------------------------------------------------
 
 Usage is very simple, You just implement **Message** the **Subscriber**.  
-The following are register to **MessagePublicher** and just publish a message.
+The following are register to **MessagePublisher** and just publish a message.
 
 ```hack
 namespace domain;
 
 use hhpack\publisher\Message;
 use hhpack\publisher\Subscribable;
-use hhpack\publisher\MessagePublicher;
+use hhpack\publisher\MessagePublisher;
 
 final class DomainMessage implements Message
 {
@@ -35,10 +35,10 @@ final class DomainMessageSubscriber implements Subscribable<Message>
 
 }
 
-$publicher = new MessagePublicher();
-$publicher->registerSubscriber(new DomainMessageSubscriber());
+$publisher = new MessagePublisher();
+$publisher->registerSubscriber(new DomainMessageSubscriber());
 
-$publicher->publish(new DomainMessage());
+$publisher->publish(new DomainMessage());
 ```
 
 Run the test
