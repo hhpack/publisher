@@ -22,10 +22,10 @@ final class SubscriptionCollector<T as Message>
     private ReflectionClass $class;
 
     public function __construct(
-        private Subscribable<T> $target
+        private Subscribable<T> $subscriber
     )
     {
-        $this->class = new ReflectionClass($target);
+        $this->class = new ReflectionClass($subscriber);
     }
 
     public function collectByType(string $type) : SubscriptionMap<T>
@@ -45,7 +45,7 @@ final class SubscriptionCollector<T as Message>
             if ($subscriptions === null) {
                 $subscriptions = Vector {};
             }
-            $subscriptions->add(new InvokeSubscription( Pair { $this->target, $result->getName() }));
+            $subscriptions->add(new InvokeSubscription( Pair { $this->subscriber, $result->getName() }));
 
             $registry->set($result->getArgumentType(), $subscriptions);
         }
