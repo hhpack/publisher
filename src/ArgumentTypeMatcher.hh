@@ -14,7 +14,7 @@ namespace hhpack\publisher;
 use ReflectionMethod;
 use ReflectionClass;
 use ReflectionParameter;
-
+use ReflectionException;
 
 final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResult>
 {
@@ -40,7 +40,7 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResu
             return MatchedResult::createForUnmatched();
         }
 
-        if ($type->implementsInterface($this->type) === false) {
+        if ($this->implementsInterface($type) === false) {
             return MatchedResult::createForUnmatched();
         }
 
@@ -48,6 +48,19 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResu
             $item->getName(),
             $type->getName()
         );
+    }
+
+    private function implementsInterface(ReflectionClass $type) : bool
+    {
+        $result = true;
+
+        try {
+            $result = $type->implementsInterface($this->type);
+        } catch (ReflectionException $exception) {
+            $result = false;
+        }
+
+        return $result;
     }
 
     public static function fromString(string $type) : ArgumentTypeMatcher

@@ -47,5 +47,13 @@ describe(ArgumentTypeMatcher::class, function () {
         expect($result->unmatched())->toBeTrue();
       });
     });
+    context('when unknown type', function () {
+      it('return unmathced result', function() {
+        $method = new ReflectionMethod(Method::class, 'oneParameterAndMessage');
+        $matcher = ArgumentTypeMatcher::fromString('unknown');
+        $result = $matcher->matches($method);
+        expect($result->unmatched())->toBeTrue();
+      });
+    });
   });
 });
