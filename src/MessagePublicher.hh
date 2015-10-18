@@ -46,4 +46,9 @@ final class MessagePublicher<T as Message> implements Publicher<T>
         }
     }
 
+    public function hasSubscriber() : bool
+    {
+        return $this->agents->isEmpty() === false;
+    }
+
 }

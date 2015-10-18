@@ -10,7 +10,7 @@ final class DomainSubscriber implements Subscribable<Message>
 
     private int $count = 0;
 
-    public function invoke(Message $message) : void
+    public function invoke(DomainMessage $message) : void
     {
         $this->count++;
     }

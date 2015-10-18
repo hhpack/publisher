@@ -28,10 +28,20 @@ final class SubscribeAgent<T as Message> implements Agent<T>
 
         foreach ($methods as $method) {
             $parameters = $method->getParameters();
+
+            if (count($parameters) <= 0) {
+                continue;
+            }
+
             $parameter = $parameters[0];
 
             $type = $parameter->getClass();
-            $typeName = $parameter->getClass()->getName();
+
+            if ($type === null) {
+                continue;
+            }
+
+            $typeName = $type->getName();
 
             if ($type->implementsInterface(Message::class) === false) {
                 continue;
