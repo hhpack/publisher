@@ -28,10 +28,10 @@ final class SubscriptionCollector<T as Message>
         $this->class = new ReflectionClass($subscriber);
     }
 
-    public function collectByType(string $type) : SubscriptionMap<T>
+    public function collectByType(string $type) : SubscriptionRegistry<T>
     {
-        $registry = Map {};
         $matcher = new ArgumentTypeMatcher($type);
+        $registry = new SubscriptionRegistry($this->subscriber);
 
         foreach ($this->methods() as $method) {
             $result = $matcher->matches($method);
@@ -39,18 +39,10 @@ final class SubscriptionCollector<T as Message>
             if ($result->unmatched()) {
                 continue;
             }
-
-            $subscriptions = $registry->get($result->getArgumentType());
-
-            if ($subscriptions === null) {
-                $subscriptions = Vector {};
-            }
-            $subscriptions->add(new InvokeSubscription( Pair { $this->subscriber, $result->getName() }));
-
-            $registry->set($result->getArgumentType(), $subscriptions);
+            $registry->registerByMatchedResult($result);
         }
 
-        return $registry->toImmMap();
+        return $registry;
     }
 
     private function methods() : Generator<int, ReflectionMethod, void>

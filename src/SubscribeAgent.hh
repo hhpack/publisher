@@ -17,7 +17,7 @@ use ReflectionMethod;
 final class SubscribeAgent<T as Message> implements Agent<T>
 {
 
-    private SubscriptionMap<T> $subscriptions = Map {};
+    private SubscriptionRegistry<T> $subscriptions;
 
     public function __construct(
         private Subscribable<T> $subscriber
