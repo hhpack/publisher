@@ -29,7 +29,7 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResu
     {
         $parameters = $item->getParameters();
 
-        if (count($parameters) <= 0) {
+        if (count($parameters) !== 1) {
             return MatchedResult::createForUnmatched();
         }
 
@@ -48,6 +48,11 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResu
             $item->getName(),
             $type->getName()
         );
+    }
+
+    public static function fromString(string $type) : ArgumentTypeMatcher
+    {
+        return new ArgumentTypeMatcher($type);
     }
 
 }
