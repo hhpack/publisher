@@ -50,7 +50,7 @@ final class SubscriptionCollector<T as Message>
             $registry->set($result->getArgumentType(), $subscriptions);
         }
 
-        return $registry;
+        return $registry->toImmMap();
     }
 
     private function methods() : Generator<int, ReflectionMethod, void>

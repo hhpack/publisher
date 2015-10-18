@@ -45,8 +45,8 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod, MatchedResu
         }
 
         return MatchedResult::createForMatched(
-            $type->getName(),
-            $item->getName()
+            $item->getName(),
+            $type->getName()
         );
     }
 
