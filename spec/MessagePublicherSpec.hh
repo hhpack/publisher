@@ -30,4 +30,16 @@ describe(MessagePublicher::class, function () {
     });
   });
 
+  describe('publish()', function () {
+    beforeEach(function() {
+      $this->subscriber = new DomainSubscriber();
+      $this->publisher = new MessagePublicher();
+      $this->publisher->registerSubscriber($this->subscriber);
+    });
+    it('published message to subscriber', function () {
+      $this->publisher->publish(new DomainMessage());
+      expect($this->subscriber->calledCount())->toBe(1);
+    });
+  });
+
 });
