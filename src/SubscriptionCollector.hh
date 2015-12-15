@@ -14,7 +14,6 @@ namespace hhpack\publisher;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
-use Generator;
 
 final class SubscriptionCollector<T as Message>
 {
@@ -45,7 +44,7 @@ final class SubscriptionCollector<T as Message>
         return $registry;
     }
 
-    private function methods() : Generator<int, ReflectionMethod, void>
+    private function methods() : Iterator<ReflectionMethod>
     {
         $methods = $this->class->getMethods(ReflectionMethod::IS_PUBLIC);
 
