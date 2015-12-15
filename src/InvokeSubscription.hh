@@ -20,7 +20,7 @@ final class InvokeSubscription<T as Message> implements Subscription<T>
     {
     }
 
-    public function receive(T $message) : void
+    public async function receive(T $message) : Awaitable<void>
     {
         $callback = $this->invokeTarget->toArray();
         call_user_func_array($callback, [ $message ]);

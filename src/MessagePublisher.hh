@@ -39,10 +39,10 @@ final class MessagePublisher<T as Message> implements Publisher<T>
         }
     }
 
-    public function publish(T $message) : void
+    public async function publish(T $message) : Awaitable<void>
     {
         foreach ($this->agents->items() as $agent) {
-            $agent->receive($message);
+            await $agent->receive($message);
         }
     }
 
