@@ -41,9 +41,10 @@ final class SubscribeAgent<T as Message> implements Agent<T>
         }
         $subscriptions = $this->subscriptions->at($nameOfType);
 
-        foreach ($subscriptions->items() as $subscription) {
-            await $subscription->receive($message);
-        }
+        $awaitables = $subscriptions->map(($subscription) ==> {
+            return $subscription->receive($message);
+        });
+        await \HH\Asio\v($awaitables);
     }
 
 }

@@ -41,9 +41,10 @@ final class MessagePublisher<T as Message> implements Publisher<T>
 
     public async function publish(T $message) : Awaitable<void>
     {
-        foreach ($this->agents->items() as $agent) {
-            await $agent->receive($message);
-        }
+        $awaitables = $this->agents->map(($agent) ==> {
+            return $agent->receive($message);
+        });
+        await \HH\Asio\v($awaitables);
     }
 
     public function hasSubscriber() : bool
