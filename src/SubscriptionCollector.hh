@@ -34,9 +34,7 @@ final class SubscriptionCollector<T as Message>
         $registry = new SubscriptionRegistry($this->subscriber);
 
         foreach ($this->methods() as $method) {
-            $result = $matcher->matches($method);
-
-            if ($result->unmatched()) {
+            if ($matcher->matches($method) === false) {
                 continue;
             }
 
