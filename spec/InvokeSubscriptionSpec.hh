@@ -9,7 +9,7 @@ use hhpack\publisher\spec\fixtures\DomainSubscriber;
 describe(InvokeSubscription::class, function () {
   beforeEach(function () {
     $this->subscriber = new DomainSubscriber();
-    $this->subscription = new InvokeSubscription(Pair { $this->subscriber, 'invoke' });
+    $this->subscription = new InvokeSubscription(DomainMessage::class, Pair { $this->subscriber, 'invoke' });
   });
   describe('receive()', function () {
     it('call once the method of target', function() {
