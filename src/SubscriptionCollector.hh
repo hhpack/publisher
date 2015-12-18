@@ -14,6 +14,7 @@ namespace hhpack\publisher;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
+use LogicException;
 
 final class SubscriptionCollector<T as Message>
 {
@@ -38,7 +39,9 @@ final class SubscriptionCollector<T as Message>
             if ($result->unmatched()) {
                 continue;
             }
-            $registry->registerByMatchedResult($result);
+
+            $subscription = $this->subscriptionFrom($method);
+            $subscription->registerTo($registry);
         }
 
         return $registry;
@@ -55,6 +58,18 @@ final class SubscriptionCollector<T as Message>
             }
             yield $method;
         }
+    }
+
+    private function subscriptionFrom(ReflectionMethod $method) : Subscription<T>
+    {
+        $parameter = ImmVector::fromItems( $method->getParameters() )->firstValue();
+        $typeName = $parameter?->getClass()?->getName();
+
+        if ($typeName === null) {
+            throw new LogicException();
+        }
+
+        return new InvokeSubscription($typeName, Pair { $this->subscriber, $method->getName() });
     }
 
 }

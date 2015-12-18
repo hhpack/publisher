@@ -11,9 +11,7 @@
 
 namespace hhpack\publisher;
 
-interface Subscription<T>
+interface Registry<T>
 {
-    public function type() : string;
-    public function receive(T $message) : Awaitable<void>;
-    public function registerTo(Registry<T> $registry) : void;
+    public function register(Subscription<T> $subscription) : void;
 }
