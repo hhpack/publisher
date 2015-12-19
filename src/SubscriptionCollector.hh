@@ -67,7 +67,7 @@ final class SubscriptionCollector<T as Message>
             throw new LogicException();
         }
 
-        return new InvokeSubscription($typeName, Pair { $this->subscriber, $method->getName() });
+        return new InvokeSubscription($typeName, Pair { $this->subscriber, $method });
     }
 
 }
