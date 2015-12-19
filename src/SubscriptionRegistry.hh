@@ -11,7 +11,7 @@
 
 namespace hhpack\publisher;
 
-final class SubscriptionRegistry<T as Message>
+final class SubscriptionRegistry<T as Message> implements Registry<T>
 {
 
     private SubscriptionMap<T> $registry;
@@ -33,16 +33,16 @@ final class SubscriptionRegistry<T as Message>
         return $this->registry->at($key);
     }
 
-    public function registerByMatchedResult(MatchedResult $result) : void
+    public function register(Subscription<T> $subscription) : void
     {
-        $subscriptions = $this->registry->get($result->getArgumentType());
+        $subscriptions = $this->registry->get( $subscription->type() );
 
         if ($subscriptions === null) {
             $subscriptions = Vector {};
         }
-        $subscriptions->add(new InvokeSubscription( Pair { $this->subscriber, $result->getName() }));
+        $subscriptions->add($subscription);
 
-        $this->registry->set($result->getArgumentType(), $subscriptions);
+        $this->registry->set($subscription->type(), $subscriptions);
     }
 
 }

@@ -11,8 +11,7 @@
 
 namespace hhpack\publisher;
 
-interface MatcherResult
+interface Registry<T>
 {
-    public function matched() : bool;
-    public function unmatched() : bool;
+    public function register(Subscription<T> $subscription) : void;
 }
