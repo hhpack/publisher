@@ -15,15 +15,31 @@ final class InvokeSubscription<T as Message> implements Subscription<T>
 {
 
     public function __construct(
+        private string $type,
         private InvokeTarget<T> $invokeTarget
     )
     {
     }
 
-    public function receive(T $message) : void
+    public function type() : string
     {
-        $callback = $this->invokeTarget->toArray();
-        call_user_func_array($callback, [ $message ]);
+        return $this->type;
+    }
+
+    public async function receive(T $message) : Awaitable<void>
+    {
+        list($subscriber, $method) = $this->invokeTarget;
+
+        if ($method->isAsync() === false) {
+            return $method->invokeArgs($subscriber, [ $message ]);
+        }
+
+        await $method->invokeArgs($subscriber, [ $message ]);
+    }
+
+    public function registerTo(Registry<T> $registry) : void
+    {
+        $registry->register($this);
     }
 
 }

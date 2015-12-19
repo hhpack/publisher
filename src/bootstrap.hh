@@ -10,7 +10,8 @@
  */
 
 namespace hhpack\publisher {
-    type Method = string;
+    use ReflectionMethod;
+
     type SubscriptionMap<T> = Map<string, Vector<Subscription<T>>>;
-    type InvokeTarget<T> = Pair<Subscribable<T>, Method>;
+    type InvokeTarget<T> = Pair<Subscribable<T>, ReflectionMethod>;
 }
