@@ -64,7 +64,11 @@ final class SubscriptionCollector<T as Message>
         $typeName = $parameter?->getClass()?->getName();
 
         if ($typeName === null) {
-            throw new LogicException();
+            throw new LogicException(sprintf(
+                '%s::%s does not receive the argument',
+                $method->getDeclaringClass()->getName(),
+                $method->getName()
+            ));
         }
 
         return new InvokeSubscription($typeName, Pair { $this->subscriber, $method });
