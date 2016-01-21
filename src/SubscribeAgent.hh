@@ -32,7 +32,7 @@ final class SubscribeAgent<T as Message> implements Agent<T>
         return $this->subscriber === $subscriber;
     }
 
-    public function receive(T $message) : void
+    public async function receive(T $message) : Awaitable<void>
     {
         $nameOfType = get_class($message);
 
@@ -41,9 +41,10 @@ final class SubscribeAgent<T as Message> implements Agent<T>
         }
         $subscriptions = $this->subscriptions->at($nameOfType);
 
-        foreach ($subscriptions->items() as $subscription) {
-            $subscription->receive($message);
-        }
+        $awaitables = $subscriptions->map(($subscription) ==> {
+            return $subscription->receive($message);
+        });
+        await \HH\Asio\v($awaitables);
     }
 
 }

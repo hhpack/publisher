@@ -14,7 +14,7 @@ namespace hhpack\publisher;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
-use Generator;
+use LogicException;
 
 final class SubscriptionCollector<T as Message>
 {
@@ -34,18 +34,18 @@ final class SubscriptionCollector<T as Message>
         $registry = new SubscriptionRegistry($this->subscriber);
 
         foreach ($this->methods() as $method) {
-            $result = $matcher->matches($method);
-
-            if ($result->unmatched()) {
+            if ($matcher->matches($method) === false) {
                 continue;
             }
-            $registry->registerByMatchedResult($result);
+
+            $subscription = $this->subscriptionFrom($method);
+            $subscription->registerTo($registry);
         }
 
         return $registry;
     }
 
-    private function methods() : Generator<int, ReflectionMethod, void>
+    private function methods() : Iterator<ReflectionMethod>
     {
         $methods = $this->class->getMethods(ReflectionMethod::IS_PUBLIC);
 
@@ -56,6 +56,22 @@ final class SubscriptionCollector<T as Message>
             }
             yield $method;
         }
+    }
+
+    private function subscriptionFrom(ReflectionMethod $method) : Subscription<T>
+    {
+        $parameter = ImmVector::fromItems( $method->getParameters() )->firstValue();
+        $typeName = $parameter?->getClass()?->getName();
+
+        if ($typeName === null) {
+            throw new LogicException(sprintf(
+                '%s::%s does not receive the argument',
+                $method->getDeclaringClass()->getName(),
+                $method->getName()
+            ));
+        }
+
+        return new InvokeSubscription($typeName, Pair { $this->subscriber, $method });
     }
 
 }

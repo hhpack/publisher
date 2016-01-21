@@ -41,6 +41,39 @@ $publisher->registerSubscriber(new DomainMessageSubscriber());
 $publisher->publish(new DomainMessage());
 ```
 
+Asynchronous processing
+------------------------------------------------
+
+You can also perform the asynchronous processing.
+
+```hack
+namespace domain;
+
+use hhpack\publisher\Message;
+use hhpack\publisher\Subscribable;
+use hhpack\publisher\MessagePublisher;
+
+final class DomainMessage implements Message
+{
+}
+
+final class DomainMessageSubscriber implements Subscribable<Message>
+{
+
+    public async function onDomainMessage(DomainMessage $message) : Awaitable<void>
+    {
+		await async_task1();
+		await async_task2();
+    }
+
+}
+
+$publisher = new MessagePublisher();
+$publisher->registerSubscriber(new DomainMessageSubscriber());
+
+$publisher->publish(new DomainMessage());
+```
+
 Run the test
 ------------------------------------------------
 
