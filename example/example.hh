@@ -4,15 +4,15 @@ namespace hhpack\publisher\example;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use hhpack\publisher\MessagePublicher;
+use hhpack\publisher\MessagePublisher;
 use hhpack\publisher\example\DomainMessage;
 use hhpack\publisher\example\DomainMessageSubscriber;
 
-function publisher_main() : void
+async function publisher_main() : Awaitable<void>
 {
     $publisher = new MessagePublisher();
     $publisher->registerSubscriber(new DomainMessageSubscriber());
 
-    $publisher->publish(new DomainMessage());
+    await $publisher->publish(new DomainMessage());
 }
-publisher_main();
+\HH\Asio\join(publisher_main());
