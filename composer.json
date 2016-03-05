@@ -15,7 +15,7 @@
   },
   "require-dev": {
     "expect/peridot-expect-plugin": "~3.0",
-    "peridot-php/peridot": "~1.15",
+    "peridot-php/peridot": "~1.17",
     "peridot-php/peridot-dot-reporter": "~1.0"
   },
   "autoload": {
