@@ -17,7 +17,7 @@ final class MessagePublisher<T as Message> implements Publisher<T>
     private Vector<Agent<T>> $agents;
 
     public function __construct(
-        ?Traversable<Subscribable<T>> $subscribers
+        Traversable<Subscribable<T>> $subscribers = []
     )
     {
         $mapper = ($subscriber) ==> new SubscribeAgent($subscriber);
