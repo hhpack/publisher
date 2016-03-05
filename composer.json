@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "hhvm": ">=3.11.0"
+    "hhvm": ">=3.12.0"
   },
   "require-dev": {
     "expect/peridot-expect-plugin": "~3.0",
