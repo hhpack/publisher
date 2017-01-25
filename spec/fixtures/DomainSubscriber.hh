@@ -1,9 +1,9 @@
 <?hh //strict
 
-namespace hhpack\publisher\spec\fixtures;
+namespace HHPack\Publisher\Spec\Fixtures;
 
-use hhpack\publisher\Message;
-use hhpack\publisher\Subscribable;
+use HHPack\Publisher\Message;
+use HHPack\Publisher\Subscribable;
 
 final class DomainSubscriber implements Subscribable<Message>
 {

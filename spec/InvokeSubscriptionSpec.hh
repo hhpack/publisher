@@ -1,11 +1,11 @@
 <?hh //partial
 
-namespace hhpack\publisher\spec;
+namespace HHPack\Publisher\Spec;
 
-use hhpack\publisher\InvokeSubscription;
-use hhpack\publisher\spec\fixtures\DomainMessage;
-use hhpack\publisher\spec\fixtures\DomainSubscriber;
-use hhpack\publisher\spec\fixtures\AsyncDomainSubscriber;
+use HHPack\Publisher\InvokeSubscription;
+use HHPack\Publisher\Spec\Fixtures\DomainMessage;
+use HHPack\Publisher\Spec\Fixtures\DomainSubscriber;
+use HHPack\Publisher\Spec\Fixtures\AsyncDomainSubscriber;
 use ReflectionMethod;
 
 describe(InvokeSubscription::class, function () {

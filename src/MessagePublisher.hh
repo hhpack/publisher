@@ -1,7 +1,7 @@
 <?hh //strict
 
 /**
- * This file is part of hhpack\publisher.
+ * This file is part of HHPack\Publisher.
  *
  * (c) Noritaka Horio <holy.shared.design@gmail.com>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\publisher;
+namespace HHPack\Publisher;
 
 final class MessagePublisher<T as Message> implements Publisher<T>
 {

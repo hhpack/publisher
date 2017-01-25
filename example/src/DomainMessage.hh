@@ -1,8 +1,8 @@
 <?hh //strict
 
-namespace hhpack\publisher\example;
+namespace HHPack\Publisher\Example;
 
-use hhpack\publisher\Message;
+use HHPack\Publisher\Message;
 
 final class DomainMessage implements Message
 {

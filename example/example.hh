@@ -1,12 +1,12 @@
 <?hh //partial
 
-namespace hhpack\publisher\example;
+namespace HHPack\Publisher\Example;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use hhpack\publisher\MessagePublisher;
-use hhpack\publisher\example\DomainMessage;
-use hhpack\publisher\example\DomainMessageSubscriber;
+use HHPack\Publisher\MessagePublisher;
+use HHPack\Publisher\Example\DomainMessage;
+use HHPack\Publisher\Example\DomainMessageSubscriber;
 
 async function publisher_main() : Awaitable<void>
 {

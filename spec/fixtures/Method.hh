@@ -1,8 +1,8 @@
 <?hh //strict
 
-namespace hhpack\publisher\spec\fixtures;
+namespace HHPack\Publisher\Spec\Fixtures;
 
-use hhpack\publisher\Message;
+use HHPack\Publisher\Message;
 
 final class Method
 {

@@ -1,10 +1,10 @@
 <?hh //partial
 
-namespace hhpack\publisher\spec;
+namespace HHPack\Publisher\Spec;
 
-use hhpack\publisher\MessagePublisher;
-use hhpack\publisher\spec\fixtures\DomainMessage;
-use hhpack\publisher\spec\fixtures\DomainSubscriber;
+use HHPack\Publisher\MessagePublisher;
+use HHPack\Publisher\Spec\Fixtures\DomainMessage;
+use HHPack\Publisher\Spec\Fixtures\DomainSubscriber;
 
 describe(MessagePublisher::class, function () {
 

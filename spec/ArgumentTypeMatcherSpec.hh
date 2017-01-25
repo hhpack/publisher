@@ -1,11 +1,11 @@
 <?hh //partial
 
-namespace hhpack\publisher\spec;
+namespace HHPack\Publisher\spec;
 
 use ReflectionMethod;
-use hhpack\publisher\Message;
-use hhpack\publisher\ArgumentTypeMatcher;
-use hhpack\publisher\spec\fixtures\Method;
+use HHPack\Publisher\Message;
+use HHPack\Publisher\ArgumentTypeMatcher;
+use HHPack\Publisher\Spec\Fixtures\Method;
 
 describe(ArgumentTypeMatcher::class, function () {
   beforeEach(function () {

@@ -1,9 +1,9 @@
 <?hh //strict
 
-namespace hhpack\publisher\example;
+namespace HHPack\Publisher\Example;
 
-use hhpack\publisher\Message;
-use hhpack\publisher\Subscribable;
+use HHPack\Publisher\Message;
+use HHPack\Publisher\Subscribable;
 
 final class DomainMessageSubscriber implements Subscribable<Message>
 {
