@@ -17,41 +17,9 @@ The following are register to **MessagePublisher** and just publish a message.
 ```hack
 namespace domain;
 
-use hhpack\publisher\Message;
-use hhpack\publisher\Subscribable;
-use hhpack\publisher\MessagePublisher;
-
-final class DomainMessage implements Message
-{
-}
-
-final class DomainMessageSubscriber implements Subscribable<Message>
-{
-
-    public function onDomainMessage(DomainMessage $message) : void
-    {
-        var_dump($message);
-    }
-
-}
-
-$publisher = new MessagePublisher();
-$publisher->registerSubscriber(new DomainMessageSubscriber());
-
-$publisher->publish(new DomainMessage());
-```
-
-Asynchronous processing
-------------------------------------------------
-
-You can also perform the asynchronous processing.
-
-```hack
-namespace domain;
-
-use hhpack\publisher\Message;
-use hhpack\publisher\Subscribable;
-use hhpack\publisher\MessagePublisher;
+use HHPack\Publisher\Message;
+use HHPack\Publisher\Subscribable;
+use HHPack\Publisher\MessagePublisher;
 
 final class DomainMessage implements Message
 {
@@ -71,7 +39,7 @@ final class DomainMessageSubscriber implements Subscribable<Message>
 $publisher = new MessagePublisher();
 $publisher->registerSubscriber(new DomainMessageSubscriber());
 
-$publisher->publish(new DomainMessage());
+await $publisher->publish(new DomainMessage());
 ```
 
 Run the test

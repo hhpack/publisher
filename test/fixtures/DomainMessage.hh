@@ -1,6 +1,6 @@
 <?hh //strict
 
-namespace HHPack\Publisher\Spec\Fixtures;
+namespace HHPack\Publisher\Test\Fixtures;
 
 use HHPack\Publisher\Message;
 

@@ -8,7 +8,7 @@ use HHPack\Publisher\Subscribable;
 final class DomainMessageSubscriber implements Subscribable<Message>
 {
 
-    public function onDomainMessage(DomainMessage $message) : void
+    public async function onDomainMessage(DomainMessage $message): Awaitable<void>
     {
         var_dump($message);
     }
