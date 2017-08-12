@@ -2,8 +2,7 @@
 
 namespace HHPack\Publisher\Test\Fixtures;
 
-use HHPack\Publisher\Message;
-use HHPack\Publisher\Subscribable;
+use HHPack\Publisher\{ Message, Subscribable };
 
 final class AsyncDomainSubscriber implements Subscribable<Message>
 {

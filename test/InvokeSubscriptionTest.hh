@@ -3,9 +3,7 @@
 namespace HHPack\Publisher\Test;
 
 use HHPack\Publisher\InvokeSubscription;
-use HHPack\Publisher\Test\Fixtures\DomainMessage;
-use HHPack\Publisher\Test\Fixtures\DomainSubscriber;
-use HHPack\Publisher\Test\Fixtures\AsyncDomainSubscriber;
+use HHPack\Publisher\Test\Fixtures\{ DomainMessage, DomainSubscriber, AsyncDomainSubscriber };
 use HackPack\HackUnit\Contract\Assert;
 use ReflectionMethod;
 

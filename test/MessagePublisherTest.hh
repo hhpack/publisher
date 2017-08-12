@@ -3,8 +3,7 @@
 namespace HHPack\Publisher\Test;
 
 use HHPack\Publisher\MessagePublisher;
-use HHPack\Publisher\Test\Fixtures\DomainMessage;
-use HHPack\Publisher\Test\Fixtures\DomainSubscriber;
+use HHPack\Publisher\Test\Fixtures\{ DomainMessage, DomainSubscriber };
 use HackPack\HackUnit\Contract\Assert;
 
 final class MessagePublisherTest

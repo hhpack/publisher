@@ -3,8 +3,7 @@
 namespace HHPack\Publisher\Test;
 
 use ReflectionMethod;
-use HHPack\Publisher\Message;
-use HHPack\Publisher\ArgumentTypeMatcher;
+use HHPack\Publisher\{ Message, ArgumentTypeMatcher };
 use HHPack\Publisher\Test\Fixtures\Method;
 use HackPack\HackUnit\Contract\Assert;
 
