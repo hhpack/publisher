@@ -10,8 +10,8 @@
  */
 
 namespace HHPack\Publisher {
-    use ReflectionMethod;
+  use ReflectionMethod;
 
-    type SubscriptionMap<T> = Map<string, Vector<Subscription<T>>>;
-    type InvokeTarget<T> = Pair<Subscribable<T>, ReflectionMethod>;
+  type SubscriptionMap<T> = Map<string, Vector<Subscription<T>>>;
+  type InvokeTarget<T> = Pair<Subscribable<T>, ReflectionMethod>;
 }

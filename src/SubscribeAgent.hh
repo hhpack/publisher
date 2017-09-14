@@ -14,37 +14,33 @@ namespace HHPack\Publisher;
 use ReflectionClass;
 use ReflectionMethod;
 
-final class SubscribeAgent<T as Message> implements Agent<T>
-{
+final class SubscribeAgent<T as Message> implements Agent<T> {
 
-    private SubscriptionRegistry<T> $subscriptions;
+  private SubscriptionRegistry<T> $subscriptions;
 
-    public function __construct(
-        private Subscribable<T> $subscriber
-    )
-    {
-        $collector = new SubscriptionCollector($subscriber);
-        $this->subscriptions = $collector->collectByType(Message::class);
+  public function __construct(private Subscribable<T> $subscriber) {
+    $collector = new SubscriptionCollector($subscriber);
+    $this->subscriptions = $collector->collectByType(Message::class);
+  }
+
+  public function matches(Subscribable<T> $subscriber): bool {
+    return $this->subscriber === $subscriber;
+  }
+
+  public async function receive(T $message): Awaitable<void> {
+    $nameOfType = get_class($message);
+
+    if ($this->subscriptions->containsKey($nameOfType) === false) {
+      return;
     }
+    $subscriptions = $this->subscriptions->at($nameOfType);
 
-    public function matches(Subscribable<T> $subscriber) : bool
-    {
-        return $this->subscriber === $subscriber;
-    }
-
-    public async function receive(T $message) : Awaitable<void>
-    {
-        $nameOfType = get_class($message);
-
-        if ($this->subscriptions->containsKey($nameOfType) === false) {
-            return;
-        }
-        $subscriptions = $this->subscriptions->at($nameOfType);
-
-        $awaitables = $subscriptions->map(($subscription) ==> {
-            return $subscription->receive($message);
-        });
-        await \HH\Asio\v($awaitables);
-    }
+    $awaitables = $subscriptions->map(
+      ($subscription) ==> {
+        return $subscription->receive($message);
+      },
+    );
+    await \HH\Asio\v($awaitables);
+  }
 
 }

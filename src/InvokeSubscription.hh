@@ -11,35 +11,29 @@
 
 namespace HHPack\Publisher;
 
-final class InvokeSubscription<T as Message> implements Subscription<T>
-{
+final class InvokeSubscription<T as Message> implements Subscription<T> {
 
-    public function __construct(
-        private string $type,
-        private InvokeTarget<T> $invokeTarget
-    )
-    {
+  public function __construct(
+    private string $type,
+    private InvokeTarget<T> $invokeTarget,
+  ) {}
+
+  public function type(): string {
+    return $this->type;
+  }
+
+  public async function receive(T $message): Awaitable<void> {
+    list($subscriber, $method) = $this->invokeTarget;
+
+    if ($method->isAsync() === false) {
+      return $method->invokeArgs($subscriber, [$message]);
     }
 
-    public function type() : string
-    {
-        return $this->type;
-    }
+    await $method->invokeArgs($subscriber, [$message]);
+  }
 
-    public async function receive(T $message) : Awaitable<void>
-    {
-        list($subscriber, $method) = $this->invokeTarget;
-
-        if ($method->isAsync() === false) {
-            return $method->invokeArgs($subscriber, [ $message ]);
-        }
-
-        await $method->invokeArgs($subscriber, [ $message ]);
-    }
-
-    public function registerTo(Registry<T> $registry) : void
-    {
-        $registry->register($this);
-    }
+  public function registerTo(Registry<T> $registry): void {
+    $registry->register($this);
+  }
 
 }

@@ -11,7 +11,6 @@
 
 namespace HHPack\Publisher;
 
-interface Registry<T>
-{
-    public function register(Subscription<T> $subscription) : void;
+interface Registry<T> {
+  public function register(Subscription<T> $subscription): void;
 }

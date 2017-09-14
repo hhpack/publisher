@@ -11,6 +11,4 @@
 
 namespace HHPack\Publisher;
 
-interface Message
-{
-}
+interface Message {}

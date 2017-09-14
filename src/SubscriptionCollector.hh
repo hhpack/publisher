@@ -16,62 +16,62 @@ use ReflectionMethod;
 use ReflectionParameter;
 use LogicException;
 
-final class SubscriptionCollector<T as Message>
-{
+final class SubscriptionCollector<T as Message> {
 
-    private ReflectionClass $class;
+  private ReflectionClass $class;
 
-    public function __construct(
-        private Subscribable<T> $subscriber
-    )
-    {
-        $this->class = new ReflectionClass($subscriber);
+  public function __construct(private Subscribable<T> $subscriber) {
+    $this->class = new ReflectionClass($subscriber);
+  }
+
+  public function collectByType(string $type): SubscriptionRegistry<T> {
+    $matcher = new ArgumentTypeMatcher($type);
+    $registry = new SubscriptionRegistry($this->subscriber);
+
+    foreach ($this->methods() as $method) {
+      if ($matcher->matches($method) === false) {
+        continue;
+      }
+
+      $subscription = $this->subscriptionFrom($method);
+      $subscription->registerTo($registry);
     }
 
-    public function collectByType(string $type) : SubscriptionRegistry<T>
-    {
-        $matcher = new ArgumentTypeMatcher($type);
-        $registry = new SubscriptionRegistry($this->subscriber);
+    return $registry;
+  }
 
-        foreach ($this->methods() as $method) {
-            if ($matcher->matches($method) === false) {
-                continue;
-            }
+  private function methods(): Iterator<ReflectionMethod> {
+    $methods = $this->class->getMethods(ReflectionMethod::IS_PUBLIC);
 
-            $subscription = $this->subscriptionFrom($method);
-            $subscription->registerTo($registry);
-        }
+    foreach ($methods as $method) {
+      if ($method->isAbstract() ||
+          $method->isStatic() ||
+          $method->isConstructor() ||
+          $method->isDestructor()) {
+        continue;
+      }
+      yield $method;
+    }
+  }
 
-        return $registry;
+  private function subscriptionFrom(
+    ReflectionMethod $method,
+  ): Subscription<T> {
+    $parameter = ImmVector::fromItems($method->getParameters())->firstValue();
+    $typeName = $parameter?->getClass()?->getName();
+
+    if ($typeName === null) {
+      throw new LogicException(
+        sprintf(
+          '%s::%s does not receive the argument',
+          $method->getDeclaringClass()->getName(),
+          $method->getName(),
+        ),
+      );
     }
 
-    private function methods() : Iterator<ReflectionMethod>
-    {
-        $methods = $this->class->getMethods(ReflectionMethod::IS_PUBLIC);
-
-        foreach ($methods as $method) {
-            if ($method->isAbstract() || $method->isStatic()
-                || $method->isConstructor() || $method->isDestructor()) {
-                continue;
-            }
-            yield $method;
-        }
-    }
-
-    private function subscriptionFrom(ReflectionMethod $method) : Subscription<T>
-    {
-        $parameter = ImmVector::fromItems( $method->getParameters() )->firstValue();
-        $typeName = $parameter?->getClass()?->getName();
-
-        if ($typeName === null) {
-            throw new LogicException(sprintf(
-                '%s::%s does not receive the argument',
-                $method->getDeclaringClass()->getName(),
-                $method->getName()
-            ));
-        }
-
-        return new InvokeSubscription($typeName, Pair { $this->subscriber, $method });
-    }
+    return
+      new InvokeSubscription($typeName, Pair {$this->subscriber, $method});
+  }
 
 }

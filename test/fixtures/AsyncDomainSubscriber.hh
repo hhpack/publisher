@@ -2,21 +2,18 @@
 
 namespace HHPack\Publisher\Test\Fixtures;
 
-use HHPack\Publisher\{ Message, Subscribable };
+use HHPack\Publisher\{Message, Subscribable};
 
-final class AsyncDomainSubscriber implements Subscribable<Message>
-{
+final class AsyncDomainSubscriber implements Subscribable<Message> {
 
-    private int $count = 0;
+  private int $count = 0;
 
-    public async function invoke(DomainMessage $message) : Awaitable<void>
-    {
-        $this->count++;
-    }
+  public async function invoke(DomainMessage $message): Awaitable<void> {
+    $this->count++;
+  }
 
-    public function calledCount() : int
-    {
-        return $this->count;
-    }
+  public function calledCount(): int {
+    return $this->count;
+  }
 
 }

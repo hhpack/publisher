@@ -11,6 +11,4 @@
 
 namespace HHPack\Publisher;
 
-interface Subscribable<T>
-{
-}
+interface Subscribable<T> {}

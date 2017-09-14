@@ -11,8 +11,7 @@
 
 namespace HHPack\Publisher;
 
-interface Agent<T>
-{
-    public function receive(T $message) : Awaitable<void>;
-    public function matches(Subscribable<T> $subscriber) : bool;
+interface Agent<T> {
+  public function receive(T $message): Awaitable<void>;
+  public function matches(Subscribable<T> $subscriber): bool;
 }

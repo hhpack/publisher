@@ -16,53 +16,45 @@ use ReflectionClass;
 use ReflectionParameter;
 use ReflectionException;
 
-final class ArgumentTypeMatcher implements Matcher<ReflectionMethod>
-{
+final class ArgumentTypeMatcher implements Matcher<ReflectionMethod> {
 
-    public function __construct(
-        private string $type
-    )
-    {
+  public function __construct(private string $type) {}
+
+  public function matches(ReflectionMethod $item): bool {
+    $parameters = $item->getParameters();
+
+    if (count($parameters) !== 1) {
+      return false;
     }
 
-    public function matches(ReflectionMethod $item) : bool
-    {
-        $parameters = $item->getParameters();
+    $parameter = $parameters[0];
+    $type = $parameter->getClass();
 
-        if (count($parameters) !== 1) {
-            return false;
-        }
-
-        $parameter = $parameters[0];
-        $type = $parameter->getClass();
-
-        if ($type === null) {
-            return false;
-        }
-
-        if ($this->implementsInterface($type) === false) {
-            return false;
-        }
-
-        return true;
+    if ($type === null) {
+      return false;
     }
 
-    private function implementsInterface(ReflectionClass $type) : bool
-    {
-        $result = true;
-
-        try {
-            $result = $type->implementsInterface($this->type);
-        } catch (ReflectionException $exception) {
-            $result = false;
-        }
-
-        return $result;
+    if ($this->implementsInterface($type) === false) {
+      return false;
     }
 
-    public static function fromString(string $type) : this
-    {
-        return new static($type);
+    return true;
+  }
+
+  private function implementsInterface(ReflectionClass $type): bool {
+    $result = true;
+
+    try {
+      $result = $type->implementsInterface($this->type);
+    } catch (ReflectionException $exception) {
+      $result = false;
     }
+
+    return $result;
+  }
+
+  public static function fromString(string $type): this {
+    return new static($type);
+  }
 
 }

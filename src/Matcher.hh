@@ -11,7 +11,6 @@
 
 namespace HHPack\Publisher;
 
-interface Matcher<Ti>
-{
-    public function matches(Ti $item) : bool;
+interface Matcher<Ti> {
+  public function matches(Ti $item): bool;
 }
