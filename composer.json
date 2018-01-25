@@ -12,7 +12,7 @@
   ],
   "require": {
     "hhvm": ">=3.21.0",
-    "hhvm/hhvm-autoload": "^1.5"
+    "facebook/hhvm-autoload": "^1.4"
   },
   "require-dev": {
     "hackpack/hackunit": "^1.1"
@@ -32,6 +32,12 @@
       "HHPack\\Publisher\\Example\\": "example/src"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/holyshared/HackUnit"
+    }
+  ],
   "scripts": {
     "test": "vendor/bin/hackunit test",
     "check": "./typecheck"
