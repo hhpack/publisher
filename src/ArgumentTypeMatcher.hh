@@ -23,7 +23,7 @@ final class ArgumentTypeMatcher implements Matcher<ReflectionMethod> {
   public function matches(ReflectionMethod $item): bool {
     $parameters = $item->getParameters();
 
-    if (count($parameters) !== 1) {
+    if (\count($parameters) !== 1) {
       return false;
     }
 

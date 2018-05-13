@@ -28,7 +28,7 @@ final class SubscribeAgent<T as Message> implements Agent<T> {
   }
 
   public async function receive(T $message): Awaitable<void> {
-    $nameOfType = get_class($message);
+    $nameOfType = \get_class($message);
 
     if ($this->subscriptions->containsKey($nameOfType) === false) {
       return;

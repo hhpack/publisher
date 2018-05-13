@@ -62,7 +62,7 @@ final class SubscriptionCollector<T as Message> {
 
     if ($typeName === null) {
       throw new LogicException(
-        sprintf(
+        \sprintf(
           '%s::%s does not receive the argument',
           $method->getDeclaringClass()->getName(),
           $method->getName(),
