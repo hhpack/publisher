@@ -27,13 +27,11 @@ final class DomainMessage implements Message
 
 final class DomainMessageSubscriber implements Subscribable<Message>
 {
-
-    public async function onDomainMessage(DomainMessage $message) : Awaitable<void>
-    {
-		await async_task1();
-		await async_task2();
-    }
-
+  public async function onDomainMessage(DomainMessage $message) : Awaitable<void>
+  {
+    await async_task1();
+    await async_task2();
+  }
 }
 
 $publisher = new MessagePublisher();
