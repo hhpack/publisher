@@ -5,66 +5,61 @@ namespace HHPack\Publisher\Test;
 use ReflectionMethod;
 use HHPack\Publisher\{Message, ArgumentTypeMatcher};
 use HHPack\Publisher\Test\Fixtures\Method;
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class ArgumentTypeMatcherTest {
-  <<Test>>
-  public function matchesWhenNoArguments(Assert $assert): void {
+final class ArgumentTypeMatcherTest extends HackTest {
+  public function testMatchesWhenNoArguments(): void {
     $matcher = ArgumentTypeMatcher::fromString(Message::class);
     $method = new ReflectionMethod(Method::class, 'noParameters');
 
     $result = $matcher->matches($method);
 
-    $assert->bool($result)->is(false);
+    expect($result)->toBeFalse();
   }
 
-  <<Test>>
-  public function matchesWhenOneArguments(Assert $assert): void {
+  public function testMatchesWhenOneArguments(): void {
     $matcher = ArgumentTypeMatcher::fromString(Message::class);
 
     $method = new ReflectionMethod(Method::class, 'oneParameter');
     $result = $matcher->matches($method);
 
-    $assert->bool($result)->is(false);
+    expect($result)->toBeFalse();
   }
 
-  <<Test>>
-  public function matchesWhenTwoArguments(Assert $assert): void {
+  public function testMatchesWhenTwoArguments(): void {
     $matcher = ArgumentTypeMatcher::fromString(Message::class);
 
     $method = new ReflectionMethod(Method::class, 'twoParameter');
     $result = $matcher->matches($method);
 
-    $assert->bool($result)->is(false);
+    expect($result)->toBeFalse();
   }
 
-  <<Test>>
-  public function matchesWhenOneArgumentsAndMessageType(Assert $assert): void {
+  public function testMatchesWhenOneArgumentsAndMessageType(): void {
     $matcher = ArgumentTypeMatcher::fromString(Message::class);
 
     $method = new ReflectionMethod(Method::class, 'oneParameterAndMessage');
     $result = $matcher->matches($method);
 
-    $assert->bool($result)->is(true);
+    expect($result)->toBeTrue();
   }
 
-  <<Test>>
-  public function matchesWhenTwoArgumentsAndMessageType(Assert $assert): void {
+  public function testMatchesWhenTwoArgumentsAndMessageType(): void {
     $matcher = ArgumentTypeMatcher::fromString(Message::class);
 
     $method = new ReflectionMethod(Method::class, 'twoParameterAndMessage');
     $result = $matcher->matches($method);
 
-    $assert->bool($result)->is(false);
+    expect($result)->toBeFalse();
   }
 
-  <<Test>>
-  public function matchesWhenUnknownType(Assert $assert): void {
+  public function testMatchesWhenUnknownType(): void {
     $matcher = ArgumentTypeMatcher::fromString('unknown');
 
     $method = new ReflectionMethod(Method::class, 'oneParameterAndMessage');
     $result = $matcher->matches($method);
 
-    $assert->bool($result)->is(false);
+    expect($result)->toBeFalse();
   }
 }

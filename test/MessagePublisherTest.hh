@@ -4,30 +4,28 @@ namespace HHPack\Publisher\Test;
 
 use HHPack\Publisher\MessagePublisher;
 use HHPack\Publisher\Test\Fixtures\{DomainMessage, DomainSubscriber};
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class MessagePublisherTest {
-  <<Test>>
-  public function registerSubscriber(Assert $assert): void {
+final class MessagePublisherTest extends HackTest {
+  public function testRegisterSubscriber(): void {
     $publisher = new MessagePublisher();
     $publisher->registerSubscriber(new DomainSubscriber());
 
-    $assert->bool($publisher->hasSubscriber())->is(true);
+    expect($publisher->hasSubscriber())->toBeTrue();
   }
 
-  <<Test>>
-  public function unregisterSubscriber(Assert $assert): void {
+  public function testUnregisterSubscriber(): void {
     $publisher = new MessagePublisher();
     $subscriber = new DomainSubscriber();
 
     $publisher->registerSubscriber($subscriber);
     $publisher->unregisterSubscriber($subscriber);
 
-    $assert->bool($publisher->hasSubscriber())->is(false);
+    expect($publisher->hasSubscriber())->toBeFalse();;
   }
 
-  <<Test>>
-  public async function publish(Assert $assert): Awaitable<void> {
+  public async function testPublish(): Awaitable<void> {
     $subscriber = new DomainSubscriber();
 
     $publisher = new MessagePublisher();
@@ -35,6 +33,6 @@ final class MessagePublisherTest {
 
     await $publisher->publish(new DomainMessage());
 
-    $assert->int($subscriber->calledCount())->eq(1);
+    expect($subscriber->calledCount())->toBeSame(1);
   }
 }
