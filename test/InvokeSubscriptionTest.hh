@@ -8,18 +8,18 @@ use HHPack\Publisher\Test\Fixtures\{
   DomainSubscriber,
   AsyncDomainSubscriber
 };
-use HackPack\HackUnit\Contract\Assert;
 use ReflectionMethod;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class InvokeSubscriptionTest {
-  <<Test>>
-  public async function receiveWhenAsync(Assert $assert): Awaitable<void> {
+final class InvokeSubscriptionTest extends HackTest {
+  public async function testReceiveWhenAsync(): Awaitable<void> {
     $subscriber = new AsyncDomainSubscriber();
     $method = new ReflectionMethod(AsyncDomainSubscriber::class, 'invoke');
     $invoker = Pair {$subscriber, $method};
     $subscription = new InvokeSubscription(DomainMessage::class, $invoker);
 
     await $subscription->receive(new DomainMessage());
-    $assert->int($subscriber->calledCount())->eq(1);
+    expect($subscriber->calledCount())->toBeSame(1);
   }
 }

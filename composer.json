@@ -15,7 +15,8 @@
     "hhvm/hhvm-autoload": "^1.6"
   },
   "require-dev": {
-    "hackpack/hackunit": "^1.1"
+    "hhvm/hacktest": "^1.1",
+    "facebook/fbexpect": "^2.1"
   },
   "autoload": {
     "psr-4": {
@@ -32,14 +33,8 @@
       "HHPack\\Publisher\\Example\\": "example/src"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/holyshared/HackUnit"
-    }
-  ],
   "scripts": {
-    "test": "vendor/bin/hackunit test",
+    "test": "vendor/bin/hacktest test",
     "check": "./typecheck"
   },
   "config": {
