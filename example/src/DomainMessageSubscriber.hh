@@ -10,7 +10,7 @@ final class DomainMessageSubscriber implements Subscribable<Message> {
   public async function onDomainMessage(
     DomainMessage $message,
   ): Awaitable<void> {
-    \var_dump($message);
+    \printf("%s", $message->description());
   }
 
 }
