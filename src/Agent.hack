@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -11,4 +9,7 @@
 
 namespace HHPack\Publisher;
 
-interface Subscribable<T> {}
+interface Agent<T> {
+  public function receive(T $message): Awaitable<void>;
+  public function matches(Subscribable<T> $subscriber): bool;
+}

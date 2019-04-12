@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Publisher\Example;
 
 use HHPack\Publisher\Message;

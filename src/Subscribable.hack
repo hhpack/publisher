@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -11,8 +9,4 @@
 
 namespace HHPack\Publisher;
 
-interface Publisher<T> {
-  public function registerSubscriber(Subscribable<T> $subscriber): void;
-  public function unregisterSubscriber(Subscribable<T> $subscriber): void;
-  public function publish(T $message): Awaitable<void>;
-}
+interface Subscribable<T> {}

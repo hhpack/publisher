@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -9,9 +7,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Publisher;
+namespace HHPack\Publisher {
+  use ReflectionMethod;
 
-interface Agent<T> {
-  public function receive(T $message): Awaitable<void>;
-  public function matches(Subscribable<T> $subscriber): bool;
+  type SubscriptionMap<T> = Map<string, Vector<Subscription<T>>>;
+  type InvokeTarget<T> = Pair<Subscribable<T>, ReflectionMethod>;
 }

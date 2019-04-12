@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -9,9 +7,6 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Publisher {
-  use ReflectionMethod;
+namespace HHPack\Publisher;
 
-  type SubscriptionMap<T> = Map<string, Vector<Subscription<T>>>;
-  type InvokeTarget<T> = Pair<Subscribable<T>, ReflectionMethod>;
-}
+interface Message {}

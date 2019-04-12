@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -34,12 +32,11 @@ final class MessagePublisher<T as Message> implements Publisher<T> {
   }
 
   public async function publish(T $message): Awaitable<void> {
-    $awaitables =
-      $this->agents->map(
-        ($agent) ==> {
-          return $agent->receive($message);
-        },
-      );
+    $awaitables = $this->agents->map(
+      ($agent) ==> {
+        return $agent->receive($message);
+      },
+    );
     await \HH\Asio\v($awaitables);
   }
 

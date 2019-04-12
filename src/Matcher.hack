@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -11,6 +9,6 @@
 
 namespace HHPack\Publisher;
 
-interface Registry<T> {
-  public function register(Subscription<T> $subscription): void;
+interface Matcher<Ti> {
+  public function matches(Ti $item): bool;
 }

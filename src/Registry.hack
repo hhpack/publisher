@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -11,4 +9,6 @@
 
 namespace HHPack\Publisher;
 
-interface Message {}
+interface Registry<T> {
+  public function register(Subscription<T> $subscription): void;
+}

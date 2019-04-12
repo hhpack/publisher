@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -11,6 +9,8 @@
 
 namespace HHPack\Publisher;
 
-interface Matcher<Ti> {
-  public function matches(Ti $item): bool;
+interface Subscription<T> {
+  public function type(): string;
+  public function receive(T $message): Awaitable<void>;
+  public function registerTo(Registry<T> $registry): void;
 }

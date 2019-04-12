@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Publisher\Test;
 
 use HHPack\Publisher\MessagePublisher;
@@ -22,7 +20,8 @@ final class MessagePublisherTest extends HackTest {
     $publisher->registerSubscriber($subscriber);
     $publisher->unregisterSubscriber($subscriber);
 
-    expect($publisher->hasSubscriber())->toBeFalse();;
+    expect($publisher->hasSubscriber())->toBeFalse();
+    ;
   }
 
   public async function testPublish(): Awaitable<void> {
