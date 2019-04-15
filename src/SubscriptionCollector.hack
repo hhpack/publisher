@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of HHPack\Publisher.
  *
@@ -44,19 +42,16 @@ final class SubscriptionCollector<T as Message> {
     $methods = $this->class->getMethods(ReflectionMethod::IS_PUBLIC);
 
     foreach ($methods as $method) {
-      if ($method->isAbstract() ||
-          $method->isStatic() ||
-          $method->isConstructor() ||
-          $method->isDestructor()) {
+      if (
+        $method->isAbstract() || $method->isStatic() || $method->isConstructor()
+      ) {
         continue;
       }
       yield $method;
     }
   }
 
-  private function subscriptionFrom(
-    ReflectionMethod $method,
-  ): Subscription<T> {
+  private function subscriptionFrom(ReflectionMethod $method): Subscription<T> {
     $parameter = ImmVector::fromItems($method->getParameters())->firstValue();
     $typeName = $parameter?->getClass()?->getName();
 
@@ -70,8 +65,7 @@ final class SubscriptionCollector<T as Message> {
       );
     }
 
-    return
-      new InvokeSubscription($typeName, Pair {$this->subscriber, $method});
+    return new InvokeSubscription($typeName, Pair {$this->subscriber, $method});
   }
 
 }

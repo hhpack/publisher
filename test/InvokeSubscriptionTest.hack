@@ -1,12 +1,10 @@
-<?hh //strict
-
 namespace HHPack\Publisher\Test;
 
 use HHPack\Publisher\InvokeSubscription;
 use HHPack\Publisher\Test\Fixtures\{
   DomainMessage,
   DomainSubscriber,
-  AsyncDomainSubscriber
+  AsyncDomainSubscriber,
 };
 use ReflectionMethod;
 use type Facebook\HackTest\HackTest;

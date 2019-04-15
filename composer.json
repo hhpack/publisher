@@ -12,18 +12,18 @@
   ],
   "require": {
     "hhvm": ">=3.21.0",
-    "hhvm/hhvm-autoload": "^1.6"
+    "hhvm/hhvm-autoload": "^2.0"
   },
   "require-dev": {
-    "hhvm/hacktest": "^1.1",
-    "facebook/fbexpect": "^2.1"
+    "hhvm/hacktest": "^1.5",
+    "facebook/fbexpect": "^2.5"
   },
   "autoload": {
     "psr-4": {
       "HHPack\\Publisher\\": "src"
     },
     "files": [
-      "src/bootstrap.hh"
+      "src/bootstrap.hack"
     ]
   },
   "autoload-dev": {

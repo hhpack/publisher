@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Publisher\Test;
 
 use ReflectionMethod;
